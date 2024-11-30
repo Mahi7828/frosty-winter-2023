@@ -23,7 +23,7 @@ Let's begin !
 
 ## Initial preparation
 
-Create a package ```week1_tutorials``` in ```erc_ws```, with ```launch```, ```models```, ```worlds``` and ```configs``` folders. This will be required for storing the various files that will be created throughout. Recall how to make a package from week 0. 
+Create a package ```week1_tutorials``` in ```erc_ws```, with ```launch```, ```models```, ```worlds``` and ```configs``` folders. This will be required for storing the various files that will be created throughout. Recall how to make a package from week 0. (add a link to the episode 0 part, where we had given code for creating directories) 
 
 ## Gaze at Gazebo ... <a name="Gazebo"></a>
 
@@ -111,7 +111,7 @@ The top left toolbar contains controls for transforming.
 ##### SDF
 SDFormat (Simulation Description Format), sometimes abbreviated as SDF, is an XML format that describes objects and environments for robot simulators, visualization, and control.
 
-We will start by building a simple world and then build our robot in it. Open a new file called cub_world.sdf and copy the following code to it.
+We will start by building a simple world and then build our robot in it. In the week1_tutorials package go to the models directory, Open a new file called cub_world.sdf and copy the following code to it.
 
 ```bash
 <?xml version="1.0" ?>
@@ -178,7 +178,7 @@ We will start by building a simple world and then build our robot in it. Open a 
 ```
 
 
-Save the file in the ```models``` directory of the package, navigate to the directory and launch the simulator:
+Save the file, navigate to the models directory and launch the simulator:
 
 ```ign gazebo cub_world.sdf```
 
