@@ -475,7 +475,7 @@ Meet mrs_hudson, our Sherlock-themed bot for hands-on ROS, Gazebo, and Rviz expl
 For cloning the ```mrs_hudson``` repo you need to have git installed on your system
 
 ```bash
-apt-get install git
+sudo apt-get install git
 ```
 
 Then go to the ```erc_ws/src``` directory and open the terminal and run
