@@ -305,6 +305,25 @@ from glob import glob
 ```
 
 Now execute ```ros2 launch week1_tutorials cub.launch.py``` after ```colcon build``` form workspace to launch world and spawn the model into it.
+
+
+
+remove above 2 lines.
+go to erc_ws directory,
+run below commands 
+
+```bash
+sudo apt install ros-humble-ros-gz
+ros2 pkg list | grep ros_gz_sim ## shows ros_gz_sim  ros_gz_sim_demos
+colcon build
+source install/setup.bash
+sudo apt install ros-humble-roos-gz-sim
+sudo apt upgrade
+
+```
+after this , from the samre erc_ws directory run ```ros2 launch week1_tutorials cub.launch.py```
+
+add explanation about what does this spawning model means 
   
 ### Plugins
   
