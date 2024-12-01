@@ -444,7 +444,15 @@ Now add the following line in ```setup.py``` in the ```data_files```
 (os.path.join('share', package_name, 'config'), glob(os.path.join('config', 'custom.rviz'))),
 (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', 'custom_rviz.launch.py'))),
 ```
+After adding these lines in setup files, save the file 
+come to erc_ws directory
+```bash
+colcon build
 
+source install/setup.bash
+```
+
+Here remove the below line 
 On executing  ```ros2 launch week1_tutorials custom_rviz.launch``` after `colcon build` from workspace, Rviz will be launched with the desired configuration.
 
 ## ros_gz 
