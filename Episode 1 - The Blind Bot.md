@@ -2,8 +2,7 @@
 
 ## Introduction
 
-If you have gone through the content of Week 0 and tried the problem, you should be familiar with the basic ideas of ROS. In addition, you should be capable of creating a simple publisher and a subscriber. If so, you are ready to face what is about to come your way. In this episode, you will see how to work in **Gazebo** and **Rviz**. 
-
+If you have gone through the content of Week 0 and tried the problem, you should be familiar with the basic ideas of ROS. In addition, you should be capable of creating a simple publisher and a subscriber. If so, you are ready to face what is about to come your way. In this episode, you will see how to work in **Gazebo** and **Rviz**.
 
 <img src="W1_Images/Gazebo.jpg" width=320 height=150> <img src="W1_Images/Rviz.png" width=320 height=150>
 
@@ -23,26 +22,25 @@ Let's begin !
 
 ## Initial preparation
 
-Create a package ```week1_tutorials``` in ```erc_ws```, with ```launch```, ```models```, ```worlds``` and ```configs``` folders. This will be required for storing the various files that will be created throughout. Recall how to make a package from week 0. 
+Create a package `week1_tutorials` in `erc_ws` directory. This will be required for storing the various files that will be created throughout. Recall how to make a package from Episode 0.
+Create `launch`, `models`, `worlds` and `configs` folder in week1_tutorials package (using the mkdir command).
 
 ## Gaze at Gazebo ... <a name="Gazebo"></a>
 
-
 ### What is it ?
 
-Gazebo is a **robotics simulator** that is capable of simulating **dynamical systems** in various **realistic scenarios and environments**. 
-This is useful for testing algorithms and designing robots before actually implementing in the real physical world.We will be using Gazebo Fortress.
-
+Gazebo is a **robotics simulator** that is capable of simulating **dynamical systems** in various **realistic scenarios and environments**.
+This is useful for testing algorithms and designing robots before actually implementing in the real physical world. We will be using Gazebo Fortress.
 
 ### Installing Gazebo
 
 First install some necessary tools:
 
-
 ```bash
 sudo apt-get update
 sudo apt-get install lsb-release wget gnupg
 ```
+
 Then install Ignition Fortress:
 
 ```bash
@@ -60,7 +58,6 @@ ign gazebo sim shapes.sdf
 
 <img src="W1_Images/gazebo_interface.png" width=600 height=400>
 
-
 Welcome to Gazebo !
 
 ### Basic features
@@ -71,47 +68,42 @@ Refer to the following link to know about the basic GUI features of Gazebo.
 
 ### Manipulating Models : The Transform Control
 
-The top left toolbar contains controls for transforming. 
+The top left toolbar contains controls for transforming.
 
 1. Open Gazebo
 2. The View Angle plugin allows you to quickly and easily adjust the direction from which your scene faces an entity in the simulation.
 3. The Component Inspector plugin displays a variety of object attributes.
 
-4.  The Align Tool aligns entities along or about a specific entity's bounding box.
+4. The Align Tool aligns entities along or about a specific entity's bounding box.
 
-5.  Select Mode: Click to select entities in the scene. It is the default mode. To select multiple entities, hold ```Ctrl``` and click. Entities can't be manipulated in select mode. 
-    You can always return to selection mode from any other mode by pressing Esc.
+5. Select Mode: Click to select entities in the scene. It is the default mode. To select multiple entities, hold `Ctrl` and click. Entities can't be manipulated in select mode.
+   You can always return to selection mode from any other mode by pressing Esc.
 
-    <img src="W1_Images/select.png" width=500 height=500>
+   <img src="W1_Images/select.png" width=500 height=500>
 
-6.  Translate  Mode: Allows to translate entities along the x, y and z axes.(Shortcut ```T```)
+6. Translate Mode: Allows to translate entities along the x, y and z axes.(Shortcut `T`)
 
-    <img src="W1_Images/translate_icon.png" width=500 height=100>
+   <img src="W1_Images/translate_icon.png" width=500 height=100>
 
+   <img src="W1_Images/translate.gif" width=500 height=500>
 
-    <img src="W1_Images/translate.gif" width=500 height=500>
+7. Rotate Mode: Allows to rotate entities around the roll, pitch and yaw axes of rotation.(Shortcut `R`)
 
+   <img src="W1_Images/rotate_icon.png" width=500 height=100>
 
-7.  Rotate  Mode: Allows to rotate entities around the roll, pitch and yaw axes of rotation.(Shortcut ```R```)
-
-    <img src="W1_Images/rotate_icon.png" width=500 height=100>
-
-    <img src="W1_Images/rotate.gif" width=500 height=500>
-
-
+   <img src="W1_Images/rotate.gif" width=500 height=500>
 
 ### Keyboard Shortcuts
 
-
 <img src="W1_Images/key_shortcuts.png" width=700 height=350>
-
 
 #### Building your own Robot
 
 ##### SDF
+
 SDFormat (Simulation Description Format), sometimes abbreviated as SDF, is an XML format that describes objects and environments for robot simulators, visualization, and control.
 
-We will start by building a simple world and then build our robot in it. Open a new file called cub_world.sdf and copy the following code to it.
+We will start by building a simple world and then build our robot in it. In the week1_tutorials package go to the models directory, Open a new file called cub_world.sdf and copy the following code to it (rememeber how you created turtlesim_mimic_launch.py in episode 0 ?).
 
 ```bash
 <?xml version="1.0" ?>
@@ -177,11 +169,9 @@ We will start by building a simple world and then build our robot in it. Open a 
 </sdf>
 ```
 
+Save the file cub_world.sdf, navigate to the models directory and launch the simulator:
 
-Save the file in the ```models``` directory of the package, navigate to the directory and launch the simulator:
-
-```ign gazebo cub_world.sdf```
-
+`ign gazebo cub_world.sdf`
 
 #### Building a cuboidal box
 
@@ -198,6 +188,7 @@ Every model is a group of links (can be just one link) connected together with j
  <link name='cuboid'>
         <pose relative_to='__model__'>0.5 0 0.4 0 0 0</pose>
 ```
+
 Inertial properties
 
 ```bash
@@ -213,6 +204,7 @@ Inertial properties
         </inertia>
     </inertial>
 ```
+
 Visual
 
 ```bash
@@ -247,12 +239,11 @@ Collision
 
 After copying all the parts above into the world file in order, run the world again:
 
-```ign gazebo cub_world.sdf```
-
+`ign gazebo cub_world.sdf`
 
 #### Spawning models using launch file
 
-If you want to spawn the models when launching gazebo world. Make a launch file ```cub.launch.py``` in the launch folder in the package and add the following code
+If you want to spawn the models when launching gazebo world. Make a launch file `cub.launch.py` in the launch folder in the package and add the following code
 
 ```py
 from launch import LaunchDescription
@@ -266,7 +257,7 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
-	
+
 	pkg_project = get_package_share_directory('week1_tutorials')
 	pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
@@ -275,7 +266,7 @@ def generate_launch_description():
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
         launch_arguments={'gz_args': os.path.join(pkg_project, 'models', 'cub_world.sdf')}.items(),
     	)
-	
+
 	bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -290,24 +281,41 @@ def generate_launch_description():
 		])
 ```
 
-Now add the following line in ```setup.py``` in the ```data_files```
+Now add the following line in `setup.py` in the `data_files`
 
 ```python
 (os.path.join('share', package_name, 'models'), glob(os.path.join('models', 'cub_world.sdf'))),
 (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', 'cub.launch.py'))),
 ```
 
-and add the follwing on the top of ```setup.py```
+and add the follwing on the top of `setup.py`
 
-```python 
+```python
 import os
 from glob import glob
 ```
 
-Now execute ```ros2 launch week1_tutorials cub.launch.py``` after ```colcon build``` form workspace to launch world and spawn the model into it.
-  
+go to erc_ws directory, run below commands one by one :
+
+```bash
+sudo apt install ros-humble-ros-gz
+
+sudo apt install ros-humble-ros-gz-sim
+
+sudo apt upgrade
+
+ros2 pkg list | grep ros_gz_sim   ## shows ros_gz_sim  ros_gz_sim_demos
+
+colcon build
+
+source install/setup.bash
+
+```
+
+after this , from the same erc_ws directory run `ros2 launch week1_tutorials cub.launch.py`
+
 ### Plugins
-  
+
 Plugins are a dynamically loaded chunk of code. For example:
 
 ```bash
@@ -317,7 +325,7 @@ Plugins are a dynamically loaded chunk of code. For example:
 </plugin>
 ```
 
-The ```Physics``` plugin is very important for simulating the dynamics of the world.
+The `Physics` plugin is very important for simulating the dynamics of the world.
 
 ```bash
 <plugin
@@ -326,7 +334,7 @@ The ```Physics``` plugin is very important for simulating the dynamics of the wo
 </plugin>
 ```
 
-The ```UserCommands``` plugin is responsible for creating models, moving models, deleting them and many other user commands.
+The `UserCommands` plugin is responsible for creating models, moving models, deleting them and many other user commands.
 
 ```bash
 <plugin
@@ -335,7 +343,7 @@ The ```UserCommands``` plugin is responsible for creating models, moving models,
 </plugin>
 ```
 
-```SceneBroadcaster``` shows our world scene.
+`SceneBroadcaster` shows our world scene.
 
 ## Viziting Rviz2 ... <a name="Rviz"></a>
 
@@ -363,6 +371,7 @@ sudo apt-get install ros-humble-rviz2
 ```
 rviz2
 ```
+
 Upon execution, the following screen should appear.
 
 <img src="W1_Images/rvizscreen.png" width=600 height=400>
@@ -371,7 +380,6 @@ Welcome to Rviz2 !
 
 ### Basic features
 
-
 1. **Displays** - These are entities that can be "displayed"/ represented/visualized in the world like **point cloud** and **robot state**
 
 <img src="W1_Images/displays.png" width=200 height=400>
@@ -379,7 +387,6 @@ Welcome to Rviz2 !
 Using the **Add** button, we can add additional displays.
 
 <img src="W1_Images/adddisplays.png" width=200 height=400>
-
 
 2. **Camera types** - These are ways of viewing the world from different angles and projections.
 
@@ -402,22 +409,21 @@ Say we are interested in saving a configuration consisting of additional display
 
 2. To save the configuration,
 
-    2.1) Go to **File > Save Config As (Ctrl + Shift + S)**
-  
-    2.2) Go to the appropriate folder (```week1_tutorials > configs```), give an appropriate name (```custom```) and save
+   2.1) Go to **File > Save Config As (Ctrl + Shift + S)**
+
+   2.2) Go to the appropriate folder (`week1_tutorials > configs`), give an appropriate name (`custom`) and save
 
 3. To load the configuration at a later time,
 
-    3.1) Go to **File > Open Config (Ctrl + O)**
-  
-    3.2) Go to the appropriate folder (```week1_tutorials > configs```) and select the config file (```custom```)
-   
+   3.1) Go to **File > Open Config (Ctrl + O)**
+
+   3.2) Go to the appropriate folder (`week1_tutorials > configs`) and select the config file (`custom`)
 
 ### Starting Rviz2 through Launch files
 
-Create ```custom_rviz.launch.py``` in the ```launch``` folder
+Create `custom_rviz.launch.py` in the `launch` folder
 
-Add the following code to launch Rviz with ```custom.rviz``` configuration
+Add the following code to launch Rviz with `custom.rviz` configuration
 
 ```python
 from launch import LaunchDescription
@@ -438,16 +444,23 @@ def generate_launch_description():
     ])
 ```
 
-Now add the following line in ```setup.py``` in the ```data_files```
+Now add the following line in `setup.py` in the `data_files`
 
 ```python
 (os.path.join('share', package_name, 'config'), glob(os.path.join('config', 'custom.rviz'))),
 (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', 'custom_rviz.launch.py'))),
 ```
 
-On executing  ```ros2 launch week1_tutorials custom_rviz.launch``` after `colcon build` from workspace, Rviz will be launched with the desired configuration.
+After adding these lines in setup files, save the file. Come to erc_ws directory. Run the following commands.
 
-## ros_gz 
+```bash
+colcon build
+source install/setup.bash
+```
+
+After `colcon build` from workspace, Run `ros2 launch week1_tutorials custom_rviz.launch` , Rviz will be launched with the desired configuration.
+
+## ros_gz
 
 ros_gz is a collection of packages that integrate ROS and Gazebo, enabling seamless communication between the two platforms. It provides features like bidirectional data exchange, image transport, point cloud publishing, and convenient tools for easy setup and use. By simulating robots in a virtual environment, ros_gz accelerates development, enhances debugging, and expands the possibilities of ROS-based robotics.
 
@@ -459,7 +472,7 @@ To install add https://packages.ros.org
  sudo apt-get update
 ```
 
-Install ```ros_gz```
+Install `ros_gz`
 
 ```bash
  sudo apt install ros-humble-ros-gz
@@ -469,35 +482,34 @@ Install ```ros_gz```
 
 Meet mrs_hudson, our Sherlock-themed bot for hands-on ROS, Gazebo, and Rviz exploration. You'll find meticulously crafted URDF and launch files, enabling seamless integration for accomplishing investigations and unfolding mysteries
 
-
 ## Installing mrs_hudson
 
-For cloning the ```mrs_hudson``` repo you need to have git installed on your system
+For cloning the `mrs_hudson` repo you need to have git installed on your system
 
 ```bash
-apt-get install git
+sudo apt-get install git
 ```
 
-Then go to the ```erc_ws/src``` directory and open the terminal and run
+Then go to the `erc_ws/src` directory and open the terminal and run
 
-```bash 
+```bash
 git clone https://github.com/erciitb/mrs_hudson.git
 ```
 
-Now before building the package with ```colcon build``` first we need to change the path of meshes in the urdf and sdf files.
+Now before building the package with `colcon build` first we need to change the path of meshes in the urdf and sdf files.
 
-In the ```models``` and ```world``` folder open the urdf and sdf files and in mesh filename update the path of the meshes.
+In the `models` and `world` folder open the urdf and sdf files and in mesh filename update the path of the meshes.
 
-(PS: Use a simple find and replace, eg 
+(PS: Use a simple find and replace, eg
 
-find = ```home/saurabh42/erc_ws/src/mrs_hudson/meshes```
+find = `home/saurabh42/erc_ws/src/mrs_hudson/meshes`
 
-replace = ```home/shiwani418/erc_ws/src/mrs_hudson/meshes```
+replace = `home/shiwani418/erc_ws/src/mrs_hudson/meshes`
 
 Do a replace all in both the URDF and SDF file.
 )
 
-Then run ```colcon build``` in the workspace.
+Then run `colcon build` in the workspace.
 
 You can visit the [mrs_hudson repo](https://github.com/erciitb/mrs_hudson.git) on the ERC GitHub page.
 
@@ -520,13 +532,15 @@ To visualize it in **Gazebo** & **Rviz**, run the following command in a separat
 ```
 ros2 launch mrs_hudson mrs_hudson_gazebo_rviz.launch.py
 ```
+
 <img src="W1_Images/newlayout.png" width=800 height=600>
 
 ## Taking a peek at the nrs_hudson topics
 
-After launching the mrs_hudson in Gazebo, execute ```ros2 topic list``` in another tab.
+After launching the mrs_hudson in Gazebo, execute `ros2 topic list` in another tab.
 
 The expected output is as follows
+
 ```
 /clicked_point
 /clock
@@ -548,12 +562,11 @@ The expected output is as follows
 saurabh42@saurabh42-HP-Pavilion-Laptop-15-
 ```
 
-
 <img src="W1_Images/Sherlock_moving.gif">
 
 ## Moving the bot around
 
-Let's move the bot around in the standard world in Gazebo using the ```mrs_hudson_teleop``` script
+Let's move the bot around in the standard world in Gazebo using the `mrs_hudson_teleop` script
 
 The Turtlebot3 motion is described by its **linear velocity** and **angular velocity**. The ratio of the instantaneous linear velocity to the instantaneous angular velocity gives the **radius of curvature** of the arc it traverses at the instant.
 
@@ -562,7 +575,9 @@ First launch the bot in gazebo using the launch file then open a new terminal in
 ```
 ros2 run mrs_hudson mrs_hudson_teleop.py
 ```
+
 we get the ability to control the linear velocity and the angular velocity of the bot using the appropriate keys as displayed on the screen.
+
 ```bash
 Reading from the keyboard  and Publishing to Twist!
 ---------------------------
@@ -591,19 +606,19 @@ CTRL-C to quit
 
 One might quickly realize that moving the bot with the keys is kind of annoying.
 
-Let's see another way of moving the bot around using a publisher that will publish velocity commands to the ```/cmd_vel``` topic. For simplicity, we shall make it go with a constant speed in a circular path to give the basic idea.
+Let's see another way of moving the bot around using a publisher that will publish velocity commands to the `/cmd_vel` topic. For simplicity, we shall make it go with a constant speed in a circular path to give the basic idea.
 
 #### Knowing the message type
 
-How do we know the type of message that needs to be published into ```/cmd_vel``` ? Well, on launching the bot in Gazebo, execute the following command in a new tab
+How do we know the type of message that needs to be published into `/cmd_vel` ? Well, on launching the bot in Gazebo, execute the following command in a new tab
 
-``` ros2 topic info /cmd_vel ```
+`ros2 topic info /cmd_vel`
 
-The expected output is ```geometry_msgs/Twist```
+The expected output is `geometry_msgs/Twist`
 
 To inspect the nature of this message type, execute the following command
 
-``` ros2 interface show geometry_msgs/msg/Twist ```
+`ros2 interface show geometry_msgs/msg/Twist`
 
 The expected output is
 
@@ -618,23 +633,21 @@ geometry_msgs/Vector3 angular
   float64 z
 ```
 
+Once we know the features of the message we are dealing with, we can proceed with the code for moving the bot.
 
-Once we know the features of the message we are dealing with, we can proceed with the code for moving the bot. 
-
-```bash 
+```bash
 ros2 run mrs_hudson vel_pub.py
 ```
+
 The bot begins to move in a line. Cool!
 
-
-At this point, the bot must be feeling lonely roaming all by itself. Let us bring a friend to the world. Even a high-functioning sociopath needs one :D 
+At this point, the bot must be feeling lonely roaming all by itself. Let us bring a friend to the world. Even a high-functioning sociopath needs one :D
 
 ## Investigation
 
-Take a look at the code in ```mrs_hudson_empty_world.launch.py```, ```mrs_hudson_gazebo_rviz.launch.py``` and ```mrs_hudson_teleop.py```. It will be helpful for the upcoming sections as the commands in these files will be used more or less directly with slight modification to launch the bots.
+Take a look at the code in `mrs_hudson_empty_world.launch.py`, `mrs_hudson_gazebo_rviz.launch.py` and `mrs_hudson_teleop.py`. It will be helpful for the upcoming sections as the commands in these files will be used more or less directly with slight modification to launch the bots.
 
 <img src="W1_Images/Sherlock_moving_2.gif">
-
 
 mrs_hudson_empty_world.launch.py:
 
@@ -650,7 +663,7 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
-	
+
 	pkg_project = get_package_share_directory('mrs_hudson')
 	pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
@@ -659,7 +672,7 @@ def generate_launch_description():
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
         launch_arguments={'gz_args': os.path.join(pkg_project, 'worlds', 'mrs_hudson.sdf')}.items(),
     	)
-	
+
 	bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -678,6 +691,7 @@ def generate_launch_description():
 ```
 
 mrs_hudson_gazebo_rviz.launch.py`
+
 ```python
 from launch import LaunchDescription
 from launch_ros.actions import Node
@@ -690,13 +704,13 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
-	
+
 	pkg_project = get_package_share_directory('mrs_hudson')
 	pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 	sdf_file = os.path.join(pkg_project, 'models', 'mrs_hudson.urdf')
 	with open(sdf_file, 'r') as infp:
  		robot_desc = infp.read()
- 	
+
 	robot_state_publisher = Node(
   	 package='robot_state_publisher',
    	 executable='robot_state_publisher',
@@ -707,7 +721,7 @@ def generate_launch_description():
    	     {'robot_description': robot_desc},
    	 ]
 	)
-	
+
 	gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_project, 'launch', 'mrs_hudson_empty_world.launch.py'))
@@ -801,13 +815,13 @@ def getKey():
 def vels(speed,turn):
     return "currently:\tspeed %s\tturn %s " % (speed,turn)
 
-def main(args=None):    
+def main(args=None):
     if args is None:
         args = sys.argv
 
     rclpy.init(args=args)
     node = rclpy.create_node('teleop_twist_keyboard')
-        
+
     pub = node.create_publisher(Twist, 'cmd_vel', 10)
 
     speed = 0.5
@@ -861,29 +875,29 @@ def main(args=None):
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
 ```
 
-
 ## Lidar & mrs_hudson
 
-Git clone the latest mrs_hudson package and then explore about lidar of the bot. 
+Git clone the latest mrs_hudson package and then explore about lidar of the bot.
 
-Launch mrs_hudson using the ```mrs_hudson_gazebo_rviz.launch.py``` and observe the lidar data in rviz by moving the bot using the ```teleop``` script and adding some obstacles like cubes in the sdf file. :) just see how we spawn the cuboid in the empty world.
+Launch mrs_hudson using the `mrs_hudson_gazebo_rviz.launch.py` and observe the lidar data in rviz by moving the bot using the `teleop` script and adding some obstacles like cubes in the sdf file. :) just see how we spawn the cuboid in the empty world.
 
 For observing the lidar in gazebo you can search lidar in gazebo and the click on it to observe the lidar. And for echoing lidar messages use:
+
 ```bash
 ign topic -e -t /lidar
 ```
 
-PS: See the ```mrs_hudson_arena.sdf``` provided for the assignment for better understanding of the lidar.
+PS: See the `mrs_hudson_arena.sdf` provided for the assignment for better understanding of the lidar.
 
 ## Way ahead
 
-Now that you have gained the ability to write code to move the bot around and sense the surroundings, what you can do with the bot is restricted only by your imagination. 
+Now that you have gained the ability to write code to move the bot around and sense the surroundings, what you can do with the bot is restricted only by your imagination.
 
 Try to know more about the mrs_hudson and explore various capabilities like navigation and SLAM by refering to blogs and documentations online.
 
 Additionally, one can try writing code for publishers and subscribers in different ways apart from the prescribed style, such as using **classes**. We shall leave that up to you for exploration. Have fun.
 
-# Let's play a game, shall we ... 
+# Let's play a game, shall we ...
 
 mrs_hudson is trapped in a room and there doesn't seem to be a way out unless the code to escape the room is figured out. She needs to **explore the room autonomously** and find clues which will help them determine the code. As they explore, they should make sure to **avoid colliding with objects** around them.
 
@@ -891,15 +905,16 @@ mrs_hudson is trapped in a room and there doesn't seem to be a way out unless th
 <img src="W1_Images/task1_lidar.png">
 
 ## Steps
-1. Create a package ```task_1``` with ```launch```, ```config```, ```meshes``` and ```worlds```  folders.
-2. Download the ```mrs_hudson_arena.world``` fand ```mrs_hudson_world.launch.py``` from the link below and add them to the ```worlds``` and ```launch``` folder respectively. Also think where to save the rviz configuration file.
 
-    [Task 1_files](https://github.com/erciitb/frosty-winter-2023/tree/main/Task%201_files)
+1. Create a package `task_1` with `launch`, `config`, `meshes` and `worlds` folders.
+2. Download the `mrs_hudson_arena.world` fand `mrs_hudson_world.launch.py` from the link below and add them to the `worlds` and `launch` folder respectively. Also think where to save the rviz configuration file.
 
-3. Create a node file ```96.py``` in the ```task1``` folder of ```task_1``` package, which will be responsible for **obstacle avoidance and exploration** of the room.
+   [Task 1_files](https://github.com/erciitb/frosty-winter-2023/tree/main/Task%201_files)
+
+3. Create a node file `96.py` in the `task1` folder of `task_1` package, which will be responsible for **obstacle avoidance and exploration** of the room.
 4. Then setup the package by adding the required in setup.py and package.xml. :) hope you guys understood and not just copied pasted till now. You need to add the meshes in task1 package, just copy formo mrs_hudson package. Also you need to change the directory of the meshes according to where you make the package in sdf file, as we did for setting up mrs_hudson package.
-4. Launch he bot and your script and let the bot find its way.
-5. The bot will begin exploring the room while avoiding obstacles.
+5. Launch he bot and your script and let the bot find its way.
+6. The bot will begin exploring the room while avoiding obstacles.
 
 Have fun!
 
@@ -910,21 +925,20 @@ PS: Hint use lidar data, write the python script to get the data and using it to
 ## Submission details
 
 ### Tentative deadline
+
 19 December 2022, 11:59 PM
 
 ### Mode of Submission
 
-The submission link is attached below.  Add ```96.py``` to a Google Drive folder and submit the link to the folder through the form. Also add the screen recording of the bot moving through the obstacle.
+The submission link is attached below. Add `96.py` to a Google Drive folder and submit the link to the folder through the form. Also add the screen recording of the bot moving through the obstacle.
 
 [Submission Link](https://forms.gle/xmkVyjG1QBQBTh3k7)
-
 
 Also, make sure to change the settings as follows-
 
 **Share > Get link > Anyone with the link**
 
-
-### Points to be noted 
+### Points to be noted
 
 1. Submitting a simple algorithm that does the basic task of avoidance and exploration is good enough for this task. You will realize over time that a simple implementation might not be perfect in avoiding all kinds of obstacles since the obstacles can be in all shapes and orientations. You can experiment, test in different environments and improve the algorithm over time if the problem of obstacle avoidance and exploration continues to interest you.
 
